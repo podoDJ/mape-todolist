@@ -61,7 +61,7 @@ const InputComp = () => {
           <label>완료일</label>
           <div className='p-5'>
 
-            <DateTimePicker value={dueDate} onChange={setDueDate} disableClock = { true } isCalendarOpen = { true }/>
+            <DateTimePicker value={dueDate} onChange={setDueDate} disableClock = { true } isCalendarOpen = { true } clearIcon= { null }/>
           </div>
         </section>
         <section>
