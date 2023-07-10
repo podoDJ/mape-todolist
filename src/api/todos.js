@@ -13,4 +13,8 @@ const deleteTodos = async (id) => {
   await axios.delete(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`)
 }
 
-export { getTodos, addTodos, deleteTodos }
+const updateTodos = async (id, updatedTodo) => {
+  await axios.patch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, updatedTodo)
+}
+
+export { getTodos, addTodos, deleteTodos, updateTodos }

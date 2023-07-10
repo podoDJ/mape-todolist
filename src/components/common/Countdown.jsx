@@ -14,6 +14,7 @@ const Countdown = ({ dueDate }) => {
         return;
       } else {
         // console.log(new Date())
+        // 여기 setCountDown(countDownDate - new Date().getTime()) 대신 setCountDown(timeGap)하면 이상하게 렌더링이 안되더라.
         setCountDown(countDownDate - new Date().getTime());
       }
     }, 1000);

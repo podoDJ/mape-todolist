@@ -1,14 +1,14 @@
 {
   "todos": [
     {
-      "id": "gdTeTKO4z",
-      "postDate": "2023-07-10T14:13:27.415Z",
-      "title": "asdf",
-      "dueDate": "2023-07-10T14:17:00.000Z",
+      "id": "XQRhfqIJ_",
+      "postDate": "2023-07-10T16:41:53.592Z",
+      "title": "수정전",
+      "dueDate": "2023-07-10T16:41:35.289Z",
       "todoType": "Boss",
-      "todoFreq": "Others",
-      "content": "fefse",
-      "estTime": "5",
+      "todoFreq": "Daily",
+      "content": "수정전내용",
+      "estTime": "2",
       "isDone": false
     }
   ]

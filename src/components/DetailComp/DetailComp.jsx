@@ -8,11 +8,11 @@ import { deleteTodos } from "../../api/todos";
 const DetailComp = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const details = useLocation().state.item
+  const item = useLocation().state.item
   // 질문 : useNavigate으로 state를 넘길 때, 클릭한 녀석의 state전체를 넘김.
   // 내가 생각한 장점은 전체 todos를 필터링 할 필요가 없다는 것이었음.
   // 그런데 진짜 유의미한건가????
-  console.log("details=>", details)
+  console.log("location=>", location)
   
   const queryClient = useQueryClient()
 
@@ -23,14 +23,11 @@ const DetailComp = () => {
     }
   })
 
-  const deleteTodoHandler = (event, id) => {
-    event.stopPropagation()
+  const deleteTodoHandler = (id) => {
     mutation.mutate(id)
     navigate("/")
     window.location.reload()
   }
-
-
 
   return (
     <S.Page>
@@ -39,20 +36,20 @@ const DetailComp = () => {
           <label>체크박스</label>
           <input type="checkbox" />
         </S.Form>
-        <S.DetailFreq>일일/주간{details.todoFreq}</S.DetailFreq>
-        <S.DetailTitle><p>제목: {details.title}</p></S.DetailTitle>
+        <S.DetailFreq>일일/주간{item.todoFreq}</S.DetailFreq>
+        <S.DetailTitle><p>제목: {item.title}</p></S.DetailTitle>
         <S.DetailDate>
-          <Countdown dueDate = { details.dueDate }/>
-          <p>등록일{details.postDate}</p>
-          <p>마감일{details.dueDate}</p>
+          <Countdown dueDate = { item.dueDate }/>
+          <p>등록일{item.postDate}</p>
+          <p>마감일{item.dueDate}</p>
         </S.DetailDate>
 
         <S.DetailBody>
-        <p>내용: {details.content}</p>
+        <p>내용: {item.content}</p>
         </S.DetailBody>
-        <S.DeleteBtn onClick = {(event) => deleteTodoHandler(event, details.id)}>삭제</S.DeleteBtn>
+        <S.DeleteBtn onClick = {() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn>
         <S.DoneBtn>완료</S.DoneBtn>
-        <S.UpdateBtn>수정</S.UpdateBtn>
+        <S.UpdateBtn onClick = {() => navigate(`/update/${item.id}`, {state: {item: item,},})}>수정</S.UpdateBtn>
       </S.Container>
     </S.Page>
   );
