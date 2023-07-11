@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Countdown from "../common/Countdown";
-import { deleteTodos } from "../../api/todos";
+import { deleteTodos, getTodos } from "../../api/todos";
 import UpdateComp from "../UpdateComp/UpdateComp";
-import InputComp from "../InputComp/InputComp";
+
 
 const DetailComp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const detailId = location.state.id
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -17,15 +19,6 @@ const DetailComp = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  useEffect(() => {
-      console.log("DetailComp 어디가 새로고침됨?");
-    },[]);
-  const location = useLocation();
-  const item = useLocation().state.item;
-  // 질문 : useNavigate으로 state를 넘길 때, 클릭한 녀석의 state전체를 넘김.
-  // 내가 생각한 장점은 전체 todos를 필터링 할 필요가 없다는 것이었음.
-  // 그런데 진짜 유의미한건가????
-  console.log("location=>", location);
 
   const queryClient = useQueryClient();
 
@@ -40,6 +33,17 @@ const DetailComp = () => {
     mutation.mutate(id);
     navigate("/");
   };
+
+  const { isLoading, isError, data } = useQuery("todos", getTodos);
+  if (isLoading) {
+    return <h1>상세보기 로딩중입니다. 잠시만 기다려주세요!!!</h1>;
+  }
+  if (isError) {
+    return <h1>오류가 발생했습니다!!</h1>;
+  }
+  console.log ("data==>",data)
+  const item = data?.find((d) => d.id === detailId)
+  console.log("item==>",item)
 
   return (
     <>
@@ -74,15 +78,7 @@ const DetailComp = () => {
           </S.DetailBody>
           <S.DeleteBtn onClick={() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn>
           <S.DoneBtn>완료</S.DoneBtn>
-
-          <S.UpdateBtn
-            onClick={
-              openModal
-              //  navigate(`/update/${item.id}`, { state: { item: item } })
-            }
-          >
-            수정
-          </S.UpdateBtn>
+          <S.UpdateBtn onClick={openModal}>수정</S.UpdateBtn>
         </S.Container>
       </S.Page>
     </>

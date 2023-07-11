@@ -82,7 +82,7 @@ const TodoList = () => {
               </div>
               <button onClick={(event) => deleteTodoHandler(event, item.id)}>삭제하기</button>
               <button>완료하기</button>
-              <button onClick={() => navigate(`/${item.id}`, { state: { item: item } })}>상세보기(임시)</button>
+              <button onClick={() => navigate(`/${item.id}`, { state: { id: item.id } })}>상세보기(임시)</button>
             </div>
           );
         })}
