@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteTodos, getTodos } from "../../api/todos";
 import Countdown from "../common/Countdown";
 import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
+import InputComp from "../InputComp/InputComp";
 
 const TodoList = () => {
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   //queryClient랑 mutation 선언은 useQuery 선언보다 위에 있어야
   //Rendered more hooks than during the previous render 오류가 안 뜨더라. 근데 이게 무슨 오류냐?
   const queryClient = useQueryClient();
@@ -29,42 +40,99 @@ const TodoList = () => {
     mutation.mutate(id);
   };
 
+
+
   return (
-    <div>
-      {data?.map((item) => {
-        return (
-          <div
-            key={item.id}
-            style={{
-              border: "1px solid black",
-              padding: "10px",
-              margin: "10px",
-            }}
-          >
-            <div>
-              <p>id: {item.id}</p>
-              <p>제목: {item.title}</p>
-              <p>작성일: {item.postDate}</p>
-              <p>완료일: {item.dueDate}</p>
-              <Countdown dueDate={item.dueDate} />
-              <p>종류: {item.todoType}</p>
-              <p>일간/주간: {item.frequency}</p>
-              <p>내용: {item.content}</p>
-              <p>예상시간: {item.estTime}분</p>
-              <p>isDone: {item.isDone.toString()}</p>
+    <>
+      <div>
+        <button onClick={openModal}>여는버튼</button>
+
+        {isOpen && (
+          <S.ModalBox onClick={closeModal}>
+            <S.ModalCtn onClick={(event) => event.stopPropagation()}>
+              <InputComp/>
+              <button onClick={closeModal}>닫는버튼</button>
+            </S.ModalCtn>
+          </S.ModalBox>
+        )}
+      </div>
+
+      <div>
+        {data?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                margin: "10px",
+              }}
+            >
+              <div>
+                <p>id: {item.id}</p>
+                <p>제목: {item.title}</p>
+                <p>작성일: {item.postDate}</p>
+                <p>완료일: {item.dueDate}</p>
+                <Countdown dueDate={item.dueDate} />
+                <p>종류: {item.todoType}</p>
+                <p>일간/주간: {item.frequency}</p>
+                <p>내용: {item.content}</p>
+                <p>예상시간: {item.estTime}분</p>
+                <p>isDone: {item.isDone.toString()}</p>
+              </div>
+              <button onClick={(event) => deleteTodoHandler(event, item.id)}>삭제하기</button>
+              <button>완료하기</button>
+              <button onClick={() => navigate(`/${item.id}`, { state: { item: item } })}>상세보기(임시)</button>
             </div>
-            <button onClick={(event) => deleteTodoHandler(event, item.id)}>삭제하기</button>
-            <button>완료하기</button>
-            <button
-              onClick={() =>
-                navigate(`/${item.id}`, {state: {item: item,},})}>
-              상세보기(임시)
-            </button>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
 export default TodoList;
+
+const S = {
+  ModalBox: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #494949;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: colorChange 0.4 linear;
+    @keyframes colorChange {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+  `,
+  ModalCtn: styled.div`
+  margin-top: 1rem;
+    background-color: white;
+    padding: 20px;
+    width: 25%;
+    height: 70%;
+    border-radius: 12px;
+    z-index: 1;
+    animation: dropTop 0.4s linear;
+    @keyframes dropTop {
+      0% {
+        transform: translateY(-30%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    }
+  `,
+};

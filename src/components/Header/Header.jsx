@@ -26,7 +26,7 @@ const S = {
     background-color: beige;
     border: 1px solid black;
     width: 100wh;
-    height: 70px;
+    height: 3rem;
 
     display: flex;
     justify-content: space-between;
@@ -34,6 +34,6 @@ const S = {
   `,
   MenuSpan: styled.span`
     border: 1px solid black;
-    padding: 1.5rem;
+    padding: 0.8rem;
   `,
 };

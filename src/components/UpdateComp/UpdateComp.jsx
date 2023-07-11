@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTodos } from "../../api/todos";
 import DateTimePicker from "react-datetime-picker";
-import 'react-datetime-picker/dist/DateTimePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
-import { useLocation } from "react-router-dom";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
+// import { useLocation } from "react-router-dom";
 
-const UpdateComp = () => {
-  const item = useLocation().state.item
-  console.log("수정페이지 item=>",item)
+const UpdateComp = ({ item, closeModal }) => {
+  // const item = useLocation().state.item
+  console.log("수정페이지 item=>", item);
   const [title, setTitle] = useState(item.title);
-  const postDate = new Date(item.postDate)
+  const postDate = new Date(item.postDate);
   const [todoType, setTodoType] = useState(item.todoType);
   const [todoFreq, setTodoFreq] = useState(item.todoFreq);
   const [dueDate, setDueDate] = useState(new Date(item.dueDate));
@@ -27,19 +27,20 @@ const UpdateComp = () => {
   const mutation = useMutation(updateTodos, {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
-      console.log("데이터 업데이트 성공!!")
-    }
-  })
-
-
+      console.log("데이터 업데이트 성공!!");
+    },
+  });
+  useEffect(() => {
+      console.log("UpdateComp 어디가 새로고침됨?");
+    },[]);
   const inputSubmitHandler = (event) => {
     event.preventDefault();
     if (!window.confirm("숙제를 수정하시겠어요?")) {
       alert("등록을 취소했습니다!!!");
     } else {
-      const  updatedTodo = {
+      const updatedTodo = {
         id: item.id,
-        postDate: postDate,    
+        postDate: postDate,
         title: title,
         dueDate: dueDate,
         todoType: todoType,
@@ -48,13 +49,13 @@ const UpdateComp = () => {
         estTime: estTime,
         isDone: false,
       };
-      mutation.mutate({ id: item.id, updatedTodo});
+      mutation.mutate({ id: item.id, updatedTodo });
       // mutation.mutate(item.id, updatedTodo);
       // 문제점 발견 : 주석처리한 방식대로 하면 todos.js에서 updatedTodo가 undefined가 됨.
       // GPT한테 왜 그런지 물어봤는데, useMutation 훅은 하나의 인자만 받는데. 그래서 쉼표로 저렇게 하면 안된데.
       // 아니 근데 화나내?? 배열로 넘겨줬을때는 왜 인덱스로 읽을려니까 못읽었냐???? 아침에 실험하고 물어보자. ==> 배열로 해도 되네?? 아니 어제 뭘 잘못 설정한거지???
       // 어쨌든 그래서 객체로 묶어서 떤져주고, 저쪽에서 인자 받을 때 구조분해할당 때려서 인자를 받아먹은거임.
-      console.log("updatedTodo=>",updatedTodo)
+      window.location.reload();
     }
   };
 
@@ -68,9 +69,8 @@ const UpdateComp = () => {
         <section>
           {/* 달력 https://github.com/wojtekmaj/react-datetime-picker#readme */}
           <label>완료일</label>
-          <div className='p-5'>
-
-            <DateTimePicker value={dueDate} onChange={setDueDate} disableClock = { true } isCalendarOpen = { true } clearIcon= { null }/>
+          <div className="p-5">
+            <DateTimePicker value={dueDate} onChange={setDueDate} disableClock={true} isCalendarOpen={true} clearIcon={null} />
           </div>
         </section>
         <section>
@@ -110,4 +110,4 @@ const UpdateComp = () => {
   );
 };
 
-export default UpdateComp
+export default UpdateComp;
