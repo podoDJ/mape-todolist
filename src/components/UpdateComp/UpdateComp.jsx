@@ -1,57 +1,66 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addTodos } from "../../api/todos";
-import shortid from "shortid";
+import { updateTodos } from "../../api/todos";
 import DateTimePicker from "react-datetime-picker";
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import { useLocation } from "react-router-dom";
 
-const InputComp = () => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(addTodos, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("todos");
-      console.log("데이터 최신화 성공!!");
-    },
-  });
-
-  const [title, setTitle] = useState("");
-  const postDate = new Date()
-  const [todoType, setTodoType] = useState("");
-  const [todoFreq, setTodoFreq] = useState("");
-  const [dueDate, setDueDate] = useState(new Date());
-  const [content, setContent] = useState("");
-  const [estTime, setEstTime] = useState(0);
+const UpdateComp = () => {
+  const item = useLocation().state.item
+  console.log("수정페이지 item=>",item)
+  const [title, setTitle] = useState(item.title);
+  const postDate = new Date(item.postDate)
+  const [todoType, setTodoType] = useState(item.todoType);
+  const [todoFreq, setTodoFreq] = useState(item.todoFreq);
+  const [dueDate, setDueDate] = useState(new Date(item.dueDate));
+  const [content, setContent] = useState(item.content);
+  const [estTime, setEstTime] = useState(item.estTime);
 
   const inputChangeHandler = (event, setState) => {
     setState(event.target.value);
   };
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(updateTodos, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+      console.log("데이터 업데이트 성공!!")
+    }
+  })
+
+
   const inputSubmitHandler = (event) => {
     event.preventDefault();
-    if (!window.confirm("숙제를 등록하시겠어요?")) {
+    if (!window.confirm("숙제를 수정하시겠어요?")) {
       alert("등록을 취소했습니다!!!");
     } else {
-      const newTodo = {
-        id: shortid.generate(),
-        postDate,
-        title,
-        dueDate,
-        todoType,
-        todoFreq,
-        content,
-        estTime,
+      const  updatedTodo = {
+        id: item.id,
+        postDate: postDate,    
+        title: title,
+        dueDate: dueDate,
+        todoType: todoType,
+        todoFreq: todoFreq,
+        content: content,
+        estTime: estTime,
         isDone: false,
       };
-      mutation.mutate(newTodo);
+      mutation.mutate({ id: item.id, updatedTodo});
+      // mutation.mutate(item.id, updatedTodo);
+      // 문제점 발견 : 주석처리한 방식대로 하면 todos.js에서 updatedTodo가 undefined가 됨.
+      // GPT한테 왜 그런지 물어봤는데, useMutation 훅은 하나의 인자만 받는데. 그래서 쉼표로 저렇게 하면 안된데.
+      // 아니 근데 화나내?? 배열로 넘겨줬을때는 왜 인덱스로 읽을려니까 못읽었냐???? 아침에 실험하고 물어보자. ==> 배열로 해도 되네?? 아니 어제 뭘 잘못 설정한거지???
+      // 어쨌든 그래서 객체로 묶어서 떤져주고, 저쪽에서 인자 받을 때 구조분해할당 때려서 인자를 받아먹은거임.
+      console.log("updatedTodo=>",updatedTodo)
     }
   };
 
   return (
     <div>
-      <form onSubmit={inputSubmitHandler}>
+      <form onSubmit={(event) => inputSubmitHandler(event)}>
         <section>
           <label>제목</label>
           <input value={title} onChange={(event) => inputChangeHandler(event, setTitle)} />
@@ -101,4 +110,4 @@ const InputComp = () => {
   );
 };
 
-export default InputComp;
+export default UpdateComp

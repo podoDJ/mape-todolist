@@ -1,47 +1,14 @@
 {
   "todos": [
     {
-      "id": "AZ95w1nVh",
-      "postDate": "2023-07-10T04:14:39.236Z",
-      "title": "카운트다운 테스트1",
-      "dueDate": "2023-07-12T04:14:18.418Z",
-      "todoType": "Boss",
-      "todoFreq": "Weekly",
-      "content": "제발 좀 되어라",
-      "estTime": "10",
-      "isDone": false
-    },
-    {
-      "id": "zSqfRjT8V",
-      "postDate": "2023-07-10T04:18:24.101Z",
-      "title": "카운트다운 테스트2",
-      "dueDate": "2023-07-14T04:17:56.567Z",
+      "id": "UYudZ4obT",
+      "postDate": "2023-07-10T18:41:19.252Z",
+      "title": "daaaaaaaaaaaaaa",
+      "dueDate": "2023-07-13T18:41:06.031Z",
       "todoType": "Others",
       "todoFreq": "Others",
-      "content": "제발 되게 해주세요",
-      "estTime": "2",
-      "isDone": false
-    },
-    {
-      "id": "j1fFPA_rK",
-      "postDate": "2023-07-10T04:23:34.669Z",
-      "title": "카운트다운 테스트3",
-      "dueDate": "2023-07-15T04:23:16.886Z",
-      "todoType": "Boss",
-      "todoFreq": "Others",
-      "content": "되어주라 제발",
-      "estTime": "5",
-      "isDone": false
-    },
-    {
-      "id": "Y8h9gsQXv",
-      "postDate": "2023-07-10T07:04:37.262Z",
-      "title": "시간테스트1",
-      "dueDate": "2023-07-10T07:03:00.000Z",
-      "todoType": "Quest",
-      "todoFreq": "Others",
-      "content": "시간테스트1",
-      "estTime": "5",
+      "content": "asdffdaf",
+      "estTime": "14",
       "isDone": false
     }
   ]

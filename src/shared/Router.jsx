@@ -7,8 +7,10 @@ import Quest from "../pages/Main/Quest";
 import Others from "../pages/Main/Others";
 import Layout from "./Layout";
 import Input from "../pages/Main/Input";
+import Update from "../pages/Detail/Update";
 
 const Router = () => {
+
   return (
     <BrowserRouter>
       <Layout>
@@ -19,6 +21,7 @@ const Router = () => {
           <Route path="/quest" element={<Quest />} />
           <Route path="/others" element={<Others />} />
           <Route path="/:id" element={<Detail />} />
+          <Route path="/update/:id" element={<Update />} />
         </Routes>
       </Layout>
     </BrowserRouter>
