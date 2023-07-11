@@ -26,7 +26,7 @@ const DetailComp = () => {
   const deleteTodoHandler = (id) => {
     mutation.mutate(id)
     navigate("/")
-    window.location.reload()
+    // window.location.reload()
   }
 
   return (
@@ -56,7 +56,7 @@ const DetailComp = () => {
 };
 
 export default DetailComp;
-// 나중에 grid로 싹다 갈아엎기
+
 const S = {
   Page: styled.div`
     margin-top: 100px;

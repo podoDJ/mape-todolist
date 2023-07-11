@@ -37,25 +37,30 @@ const UpdateComp = () => {
     if (!window.confirm("숙제를 수정하시겠어요?")) {
       alert("등록을 취소했습니다!!!");
     } else {
-      const updatedTodo = {
+      const  updatedTodo = {
         id: item.id,
-        postDate,
-        title,
-        dueDate,
-        todoType,
-        todoFreq,
-        content,
-        estTime,
+        postDate: postDate,    
+        title: title,
+        dueDate: dueDate,
+        todoType: todoType,
+        todoFreq: todoFreq,
+        content: content,
+        estTime: estTime,
         isDone: false,
       };
-      mutation.mutate(item.id, updatedTodo);
+      mutation.mutate({ id: item.id, updatedTodo});
+      // mutation.mutate(item.id, updatedTodo);
+      // 문제점 발견 : 주석처리한 방식대로 하면 todos.js에서 updatedTodo가 undefined가 됨.
+      // GPT한테 왜 그런지 물어봤는데, useMutation 훅은 하나의 인자만 받는데. 그래서 쉼표로 저렇게 하면 안된데.
+      // 아니 근데 화나내?? 배열로 넘겨줬을때는 왜 인덱스로 읽을려니까 못읽었냐???? 아침에 실험하고 물어보자. ==> 배열로 해도 되네?? 아니 어제 뭘 잘못 설정한거지???
+      // 어쨌든 그래서 객체로 묶어서 떤져주고, 저쪽에서 인자 받을 때 구조분해할당 때려서 인자를 받아먹은거임.
       console.log("updatedTodo=>",updatedTodo)
     }
   };
 
   return (
     <div>
-      <form onSubmit={inputSubmitHandler}>
+      <form onSubmit={(event) => inputSubmitHandler(event)}>
         <section>
           <label>제목</label>
           <input value={title} onChange={(event) => inputChangeHandler(event, setTitle)} />
