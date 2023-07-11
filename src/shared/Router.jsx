@@ -8,6 +8,7 @@ import Others from "../pages/Main/Others";
 import Layout from "./Layout";
 import Input from "../pages/Main/Input";
 import Update from "../pages/Detail/Update";
+import Signup from "../pages/Signup/Signup";
 
 const Router = () => {
 
@@ -16,6 +17,7 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/signup" element={<Signup/>} />
           <Route path="/input" element={<Input/>} />
           <Route path="/boss" element={<Boss />} />
           <Route path="/quest" element={<Quest />} />

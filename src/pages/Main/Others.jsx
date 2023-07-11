@@ -1,4 +1,5 @@
 import React from "react";
+import OthersMain from "../../components/OthersComp/OthersMain";
 
 const Others = () => {
   return (
@@ -7,7 +8,7 @@ const Others = () => {
         marginTop: "100px",
       }}
     >
-      <div>Others</div>
+      <OthersMain/>
     </div>
   );
 };

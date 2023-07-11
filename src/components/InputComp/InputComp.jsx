@@ -13,8 +13,9 @@ const InputComp = () => {
   const mutation = useMutation(addTodos, {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
-      console.log("데이터 최신화 성공!!");
+      console.log("신규 포스트 입력 & 데이터 최신화 성공!!");
     },
+    onError: () => alert("죄송합니다. 현재 서버가 불안정한 상태입니다. 최대한 빠르게 복구하겠습니다.")
   });
 
   const [title, setTitle] = useState("");
@@ -46,6 +47,7 @@ const InputComp = () => {
         isDone: false,
       };
       mutation.mutate(newTodo);
+      window.location.reload()
     }
   };
 

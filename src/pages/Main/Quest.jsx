@@ -1,4 +1,5 @@
 import React from "react";
+import QuestMain from "../../components/QuestComp/QuestMain";
 
 const Quest = () => {
   return (
@@ -7,7 +8,7 @@ const Quest = () => {
         marginTop: "100px",
       }}
     >
-      <div>Quest</div>
+      <QuestMain/>
     </div>
   );
 };

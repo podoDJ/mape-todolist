@@ -30,9 +30,7 @@ const UpdateComp = ({ item, closeModal }) => {
       console.log("데이터 업데이트 성공!!");
     },
   });
-  useEffect(() => {
-      console.log("UpdateComp 어디가 새로고침됨?");
-    },[]);
+  
   const inputSubmitHandler = (event) => {
     event.preventDefault();
     if (!window.confirm("숙제를 수정하시겠어요?")) {

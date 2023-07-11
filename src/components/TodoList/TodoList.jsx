@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteTodos, getTodos } from "../../api/todos";
 import Countdown from "../common/Countdown";
@@ -17,6 +17,10 @@ const TodoList = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+  // useEffect(() => {
+  //   setIsOpen
+  // }, [openModal, closeModal])
+
   //queryClient랑 mutation 선언은 useQuery 선언보다 위에 있어야
   //Rendered more hooks than during the previous render 오류가 안 뜨더라. 근데 이게 무슨 오류냐?
   const queryClient = useQueryClient();
@@ -33,14 +37,14 @@ const TodoList = () => {
     return <h1>로딩중입니다. 잠시만 기다려주세요!!</h1>;
   }
   if (isError) {
-    return <h1>오류가 발생했습니다!!</h1>;
+    return <h1>데이터 Get오류가 발생했습니다!!</h1>;
   }
   const deleteTodoHandler = (event, id) => {
     event.stopPropagation();
     mutation.mutate(id);
   };
 
-
+  const sortUrgentData = data?.sort((a, b) => (new Date(a.dueDate) - new Date(b.dueDate)))
 
   return (
     <>
@@ -58,7 +62,7 @@ const TodoList = () => {
       </div>
 
       <div>
-        {data?.map((item) => {
+        {sortUrgentData?.map((item) => {
           return (
             <div
               key={item.id}
@@ -100,11 +104,11 @@ const S = {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #494949;
+    background-color: #999999;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: colorChange 0.4 linear;
+    animation: colorChange 0.5s linear;
     @keyframes colorChange {
       0% {
         opacity: 0;
@@ -123,10 +127,10 @@ const S = {
     height: 70%;
     border-radius: 12px;
     z-index: 1;
-    animation: dropTop 0.4s linear;
+    animation: dropTop 0.5s linear;
     @keyframes dropTop {
       0% {
-        transform: translateY(-30%);
+        transform: translateY(-20%);
         opacity: 0;
       }
       100% {
