@@ -53,7 +53,7 @@ const InputComp = () => {
 
   return (
     <div>
-      <form onSubmit={inputSubmitHandler}>
+      <form onSubmit={(event) => inputSubmitHandler(event)}>
         <section>
           <label>제목</label>
           <input value={title} onChange={(event) => inputChangeHandler(event, setTitle)} />

@@ -9,8 +9,6 @@ const Main = () => {
         marginTop: "100px",
       }}
     >
-      <LoginComp />
-      <br />
       <TodoList />
     </div>
   );

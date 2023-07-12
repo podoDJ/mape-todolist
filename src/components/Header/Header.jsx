@@ -3,24 +3,30 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { getUsers, updateUsers } from "../../api/users";
+import { useAuth } from "../../api/AuthContex";
 
 const Header = () => {
   const navigate = useNavigate();
 
-  // const queryClient = useMutation(updateUsers, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("users");
-  //     console.log("로그아웃 성공!!");
-  //   },
-  // });
+  const {
+    authUser,
+    setAuthUser,
+    isLoggedIn,
+    setIsLoggedIn
+  } = useAuth()
 
-  // const { isLoading, isError, data } = useQuery("users", getUsers);
-  // if (isLoading) {
-  //   return <h1>로딩중입니다. 잠시만 기다려주세요!!</h1>;
-  // }
-  // if (isError) {
-  //   return <h1>로그인 오류가 발생했습니다!!</h1>;
-  // }
+  const logIn = (event) => {
+    event.preventDefault()
+    setIsLoggedIn(true)
+    setAuthUser({
+      name: 'John Doe'
+    })
+  }
+  const logOut = (event) => {
+    event.preventDefault()
+    setIsLoggedIn(false)
+    setAuthUser(null)
+  }
 
   return (
     <S.Header>
@@ -32,8 +38,11 @@ const Header = () => {
       </div>
       <div>
         <S.MenuSpan onClick={() => navigate("/signup")}>회원가입</S.MenuSpan>
-        <S.MenuSpan>로그인</S.MenuSpan>
-        <S.MenuSpan>로그아웃</S.MenuSpan>
+        {/* <S.MenuSpan onClick = {(event) => logIn(event)}>로그인</S.MenuSpan>
+        <S.MenuSpan onClick = {(event) => logOut(event)}>로그아웃</S.MenuSpan> */}
+        {isLoggedIn ? 
+        <S.MenuSpan onClick = {(event) => logOut(event)}>로그아웃</S.MenuSpan> : 
+        <S.MenuSpan onClick = {() => navigate("/login")}>로그인</S.MenuSpan>}
         <S.MenuSpan>프로필 위치</S.MenuSpan>
       </div>
     </S.Header>

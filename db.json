@@ -50,5 +50,17 @@
       "unionLevel": "88",
       "isLogin": true
     }
+  ],
+  "logins": [
+    {
+      "id": "gIV9xp17F",
+      "name": "11",
+      "pw": "33"
+    },
+    {
+      "id": "1PNeyCxeT",
+      "name": "1",
+      "pw": "3"
+    }
   ]
 }

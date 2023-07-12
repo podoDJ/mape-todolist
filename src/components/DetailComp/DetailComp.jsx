@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Countdown from "../common/Countdown";
 import { deleteTodos, getTodos } from "../../api/todos";
 import UpdateComp from "../UpdateComp/UpdateComp";
-
+import { useAuth } from "../../api/AuthContex";
 
 const DetailComp = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const DetailComp = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  console.log("useAuth=>",useAuth())
   const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {
