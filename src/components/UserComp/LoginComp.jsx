@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../api/AuthContex";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { addLogins, getLogins } from "../../api/logins";
+import { addLogins } from "../../api/logins";
 import { getUsers } from "../../api/users";
 import { useNavigate } from "react-router-dom";
 
@@ -12,16 +12,6 @@ const LoginComp = () => {
     // 1. 입력값을 state로 처리한다.
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPw, setLoginPw] = useState("");
-
-  useEffect(() => {
-    console.log("loginEmail=>", loginEmail);
-    console.log("loginPw=>", loginPw);
-    console.log(
-      "find=>",
-      data?.find((item) => item.email === loginEmail)
-    );
-    console.log("userName=>", authUser ? authUser : "정보 못받은듯");
-  }, [loginEmail, loginPw, authUser]);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addLogins, {
@@ -41,10 +31,12 @@ const LoginComp = () => {
     return <h1>로그인 오류가 발생했습니다!!</h1>;
   }
 
-  const logIn = (userName) => {
+  const logIn = (validEmailUser) => {
     setIsLoggedIn(true);
     setAuthUser({
-      name: userName,
+      name: validEmailUser.name,
+      id: validEmailUser.id,
+      pw: validEmailUser.pw,
     });
   };
   const logOut = () => {
@@ -79,14 +71,13 @@ const LoginComp = () => {
         return;
       } else {
         // 4. validation을 통과하면, isLoggedIn의 state를 true로 바꿔줘야 한다.
-        logIn(validEmailUser.name);
+        logIn(validEmailUser);
         const newLogin = {
           id: validEmailUser.id,
           name: validEmailUser.name,
           pw: validEmailUser.pw,
         };
         mutation.mutate(newLogin);
-        navigate("/")
       }
     }
   };

@@ -1,25 +1,14 @@
 {
   "todos": [
     {
-      "id": "goWscqDlp",
-      "postDate": "2023-07-11T09:16:06.112Z",
-      "title": "생성테스트1",
-      "dueDate": "2023-07-14T09:14:00.000Z",
+      "id": "nxHBi5F-k",
+      "postDate": "2023-07-12T06:38:57.023Z",
+      "title": "db실험",
+      "dueDate": "2023-07-12T06:42:00.000Z",
       "todoType": "Boss",
       "todoFreq": "Daily",
-      "content": "ㅁㄴㅇㄹ",
-      "estTime": "5",
-      "isDone": false
-    },
-    {
-      "id": "ILwSS8KZ7",
-      "postDate": "2023-07-11T09:16:27.196Z",
-      "title": "ㅁㄴㅇㅁ",
-      "dueDate": "2023-07-20T09:16:12.661Z",
-      "todoType": "Boss",
-      "todoFreq": "Daily",
-      "content": "ㄹㄷㄴㄹ",
-      "estTime": "5",
+      "content": "핑크빈사냥",
+      "estTime": "4",
       "isDone": false
     }
   ],
@@ -51,16 +40,5 @@
       "isLogin": true
     }
   ],
-  "logins": [
-    {
-      "id": "gIV9xp17F",
-      "name": "11",
-      "pw": "33"
-    },
-    {
-      "id": "1PNeyCxeT",
-      "name": "1",
-      "pw": "3"
-    }
-  ]
+  "logins": []
 }

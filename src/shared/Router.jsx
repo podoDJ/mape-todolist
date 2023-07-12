@@ -10,24 +10,37 @@ import Input from "../pages/Main/Input";
 import Update from "../pages/Detail/Update";
 import Signup from "../pages/Signup/Signup";
 import Login from "../pages/Signup/Login";
+import { useAuth } from "../api/AuthContex";
+import BlockLayout from "./BlockLayout";
 
 const Router = () => {
+  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+
+
 
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Signup/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/input" element={<Input/>} />
-          <Route path="/boss" element={<Boss />} />
-          <Route path="/quest" element={<Quest />} />
-          <Route path="/others" element={<Others />} />
-          <Route path="/:id" element={<Detail />} />
-          <Route path="/update/:id" element={<Update />} />
-        </Routes>
-      </Layout>
+      {isLoggedIn ? (
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/input" element={<Input />} />
+            <Route path="/boss" element={<Boss />} />
+            <Route path="/quest" element={<Quest />} />
+            <Route path="/others" element={<Others />} />
+            <Route path="/:id" element={<Detail />} />
+            <Route path="/update/:id" element={<Update />} />
+          </Routes>
+        </Layout>
+      ) : (
+        <BlockLayout>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </BlockLayout>
+      )}
       {/* <AuthLayout>
         <Routes>
         <Route path="/signup" element={<Signup/>} />

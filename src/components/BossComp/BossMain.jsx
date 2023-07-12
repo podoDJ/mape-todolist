@@ -5,6 +5,7 @@ import Countdown from "../common/Countdown";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import InputComp from "../InputComp/InputComp";
+import { useAuth } from "../../api/AuthContex";
 
 const BossMain = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const BossMain = () => {
   useEffect(() => {
     setIsOpen
   }, [openModal, closeModal])
-
+  console.log("보스메인에서 유스어스", useAuth()? useAuth() : "보스메인에서 유스어스 안뜸")
   //queryClient랑 mutation 선언은 useQuery 선언보다 위에 있어야
   //Rendered more hooks than during the previous render 오류가 안 뜨더라. 근데 이게 무슨 오류냐?
   const queryClient = useQueryClient();

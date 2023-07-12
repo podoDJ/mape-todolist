@@ -19,7 +19,7 @@ const DetailComp = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log("useAuth=>",useAuth())
+  console.log("디테일에서useAuth=>",useAuth() ? useAuth() : "아직 undefined" )
   const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {

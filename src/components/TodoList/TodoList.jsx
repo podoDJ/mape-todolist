@@ -79,7 +79,7 @@ const TodoList = () => {
                 <p>완료일: {item.dueDate}</p>
                 <Countdown dueDate={item.dueDate} />
                 <p>종류: {item.todoType}</p>
-                <p>일간/주간: {item.frequency}</p>
+                <p>일간/주간: {item.todoFreq}</p>
                 <p>내용: {item.content}</p>
                 <p>예상시간: {item.estTime}분</p>
                 <p>isDone: {item.isDone.toString()}</p>
