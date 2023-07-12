@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Main from "../pages/Main/Main";
 import Detail from "../pages/Detail/Detail";
 import Boss from "../pages/Main/Boss";
@@ -10,11 +10,24 @@ import Input from "../pages/Main/Input";
 import Update from "../pages/Detail/Update";
 import Signup from "../pages/Signup/Signup";
 import Login from "../pages/Signup/Login";
-import { useAuth } from "../api/AuthContex";
 import BlockLayout from "./BlockLayout";
+import { auth } from "../firebase";
 
 const Router = () => {
-  const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  // const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(auth.currentUser)
+  const [currentUser, setCurrentUser] = useState({})
+  // console.log("currentUser=>",currentUser)
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true)
+        setCurrentUser(user)
+      } else {
+        setIsLoggedIn(false)
+      }
+    })
+  }, [])
   console.log("라우터를 통하니?")
 
 
@@ -35,7 +48,7 @@ const Router = () => {
       ) : (
         <BlockLayout>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Navigate to="/Login"/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>

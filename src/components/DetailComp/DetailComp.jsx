@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import Countdown from "../common/Countdown";
 import { deleteTodos, getTodos } from "../../api/todos";
 import UpdateComp from "../UpdateComp/UpdateComp";
-import { useAuth } from "../../api/AuthContex";
+
 
 const DetailComp = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const DetailComp = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log("디테일에서useAuth=>",useAuth() ? useAuth() : "아직 undefined" )
+ 
   const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {
@@ -41,7 +41,7 @@ const DetailComp = () => {
   if (isError) {
     return <h1>오류가 발생했습니다!!</h1>;
   }
-  console.log ("data==>",data)
+
   const item = data?.find((d) => d.id === detailId)
   console.log("item==>",item)
 
@@ -76,7 +76,7 @@ const DetailComp = () => {
           <S.DetailBody>
             <p>내용: {item.content}</p>
           </S.DetailBody>
-          <S.DeleteBtn onClick={() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn>
+          {/* <S.DeleteBtn onClick={() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn> */}
           <S.DoneBtn>완료</S.DoneBtn>
           <S.UpdateBtn onClick={openModal}>수정</S.UpdateBtn>
         </S.Container>

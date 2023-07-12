@@ -1,5 +1,5 @@
 import React from 'react'
-import SignupComp from '../../components/UserComp/SignupComp'
+import RegisterComp from '../../components/UserComp/RegisterComp'
 
 const Signup = () => {
   return (
@@ -8,7 +8,7 @@ const Signup = () => {
       marginTop: "100px",
     }}
   >
-    <SignupComp />
+    <RegisterComp />
   </div>
   )
 }

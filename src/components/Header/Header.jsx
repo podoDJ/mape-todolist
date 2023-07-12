@@ -5,6 +5,8 @@ import { styled } from "styled-components";
 import { getUsers, updateUsers } from "../../api/users";
 import { useAuth } from "../../api/AuthContex";
 import { deleteLogins, getLogins } from "../../api/logins";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,36 +15,44 @@ const Header = () => {
   const mutation = useMutation(deleteLogins, {
     onSuccess: () => {
       queryClient.invalidateQueries("logins");
-      console.log("로그인 데이터 삭제 완료.")
+      console.log("로그인 데이터 삭제 완료.");
     },
-    onerror: () => alert("로그인 데이터 삭제 에러")
-  })
-  
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn
-  } = useAuth()
+    onerror: () => alert("로그인 데이터 삭제 에러"),
+  });
 
-  const logOut = (event) => {
-    event.preventDefault()
-    setIsLoggedIn(false)
-    setAuthUser(null)
-  }
+  // const {
+  //   authUser,
+  //   setAuthUser,
+  //   isLoggedIn,
+  //   setIsLoggedIn
+  // } = useAuth()
 
-  const { isLoading, isError, data } = useQuery("logins", getLogins)
+  // const logOut = (event) => {
+  //   event.preventDefault()
+  //   setIsLoggedIn(false)
+  //   setAuthUser(null)
+  // }
+
+  const logOutFunc = async () => {
+    await signOut(auth);
+    window.location.reload();
+  };
+
+  const { isLoading, isError, data } = useQuery("logins", getLogins);
   if (isLoading) {
-    return <h1>로그인 정보를 불러오는 중입니다.</h1>
+    return <h1>로그인 정보를 불러오는 중입니다.</h1>;
   }
   if (isError) {
-    return <h1>로그인 정보 Get 오류</h1>
+    return <h1>로그인 정보 Get 오류</h1>;
   }
-  
+
   const deleteLoginHandler = (event) => {
-    mutation.mutate(authUser.id)
-    logOut(event)
-  }
+    event.preventDefault();
+    
+    logOutFunc();
+    window.location.reload()
+  };
+  // mutation.mutate(authUser.id);
 
   return (
     <S.Header>
@@ -53,7 +63,7 @@ const Header = () => {
         <S.MenuSpan onClick={() => navigate("/others")}>기타</S.MenuSpan>
       </div>
       <div>
-        <S.MenuSpan onClick = {(event) => deleteLoginHandler(event)}>로그아웃</S.MenuSpan>
+        <S.MenuSpan onClick={(event) => deleteLoginHandler(event)}>로그아웃</S.MenuSpan>
         <S.MenuSpan>프로필 위치</S.MenuSpan>
       </div>
     </S.Header>
