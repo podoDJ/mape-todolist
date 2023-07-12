@@ -50,7 +50,6 @@ const Header = () => {
         <S.MenuSpan onClick={() => navigate("/")}>로고(메인으로감)</S.MenuSpan>
         <S.MenuSpan onClick={() => navigate("/boss")}>보스</S.MenuSpan>
         <S.MenuSpan onClick={() => navigate("/quest")}>퀘스트</S.MenuSpan>
-        <S.MenuSpan onClick={() => navigate("/quest")}>퀘스트</S.MenuSpan>
         <S.MenuSpan onClick={() => navigate("/others")}>기타</S.MenuSpan>
       </div>
       <div>

@@ -15,7 +15,7 @@ import BlockLayout from "./BlockLayout";
 
 const Router = () => {
   const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
-
+  console.log("라우터를 통하니?")
 
 
   return (
