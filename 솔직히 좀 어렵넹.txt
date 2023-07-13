@@ -1,0 +1,43 @@
+1. rendered more hooks는 일반적으로 if문에서 발생한다.
+지난번 rendered fewer hooks의 반대 상황이다.
+if문에서 오류가 발생하면 JS는 코드를 내려읽지 않는다.
+다음의 경우, 비동기처리를 진행했던 녀석이므로,
+isLoading에 걸리는 동안에는 false가 된다.
+  const { isLoading, isError, data } = useQuery("users", getUsers);
+  if (isLoading) {
+    return <h1>로그인 중입니다. 잠시만 기다려주세요!!!</h1>;
+  }
+  if (isError) {
+    return <h1>로그인 오류가 발생했습니다!!</h1>;
+  }
+
+const { authUser, setAuthUser, isLoggedIn, setIsLoggedIn } = useAuth();
+
+근데 그 아래에 useAuth()있었다.
+그 경우, js가 선언식을 싸그리 모아 읽을 초기화 단계 때,
+false인 상태로 안 넘어가지니까 다른 애들을 useHook들을 못 읽는다.
+
+2. 전역관리 : 전역관리를 Router나 Layout에서 처리해줘야 했는데 어딘지 까먹었다.
+여기서 전역관리란, axios로 db.json에서 logins 가져오는 거다.
+
+2. 로그인 전후 header를 처리해줘야 한다. 그 방법은 Router.jsx에서
+    <BrowserRouter>
+      <로그인 후 Layout> <--여기에는 로그인 후 HeaderComp를 배정
+        <Routes>
+          <Route path="/" element={<Main />} />
+          
+          <Route path="/input" element={<Input/>} />
+          <Route path="/boss" element={<Boss />} />
+          <Route path="/quest" element={<Quest />} />
+          <Route path="/others" element={<Others />} />
+          <Route path="/:id" element={<Detail />} />
+          <Route path="/update/:id" element={<Update />} />
+        </Routes>
+      </Layout>
+      <로그인 전 Layout> <--여기에는 로그인 전 HeaderComp를 배정. 귀찮으면 그냥 헤더 빼던가 ㅋㅋ
+        <Routes>
+        <Route path="/signup" element={<Signup/>} />
+          <Route path="/login" element={<Login/>} />
+          </Routes>
+      </AuthLayout>
+    </BrowserRouter>

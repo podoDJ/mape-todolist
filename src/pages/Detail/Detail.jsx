@@ -1,8 +1,9 @@
 import React from 'react'
+import DetailComp from '../../components/DetailComp/DetailComp'
 
 const Detail = () => {
   return (
-    <div>Detail</div>
+    <DetailComp/>
   )
 }
 

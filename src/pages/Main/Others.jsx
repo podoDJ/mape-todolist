@@ -1,4 +1,5 @@
 import React from "react";
+import TodoList from "../../components/TodoList/TodoList";
 
 const Others = () => {
   return (
@@ -7,7 +8,7 @@ const Others = () => {
         marginTop: "100px",
       }}
     >
-      <div>Others</div>
+      <TodoList todoTypeIs={"Others"} />
     </div>
   );
 };

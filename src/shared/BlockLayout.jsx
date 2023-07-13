@@ -1,31 +1,31 @@
 import React from "react";
-import Header from "../components/Header/Header";
 import { styled } from "styled-components";
+import BlockHeader from "../components/Header/BlockHeader";
 
-const Layout = ({ children }) => {
+const BlockLayout = ({ children }) => {
   return (
     <>
-      <StHeader>
-        <Header />
-      </StHeader>
+      <StBlockHeader>
+        <BlockHeader/>
+      </StBlockHeader>
       {/* //children부분 이해 못함. 아냐 솔직히 칠드런 개념부터 헷갈린다고 하자. 아니 부모가 자식한테 데이터주는건 아는데.. */}      
-      <StLayout>
+      <StBlockLayout>
         <div>{children}</div>
-      </StLayout>
+      </StBlockLayout>
     </>
   );
 };
 
-export default Layout;
-const StHeader = styled.header`
+export default BlockLayout;
+const StBlockHeader = styled.header`
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 999;
 `;
 
-const StLayout = styled.div`
-  max-width: 1400px;
+const StBlockLayout = styled.div`
+  max-width: 1200px;
   min-width: 800px;
   margin: 2px auto;
 `;
