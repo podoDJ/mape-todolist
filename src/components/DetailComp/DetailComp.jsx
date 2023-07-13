@@ -1,57 +1,92 @@
-import React from "react";
-import { useMutation, useQueryClient } from "react-query";
+import React, { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { deleteTodos, getTodos } from "../../api/todos";
 import Countdown from "../common/Countdown";
-import { deleteTodos } from "../../api/todos";
+import UpdateComp from "../UpdateComp/UpdateComp";
 
 const DetailComp = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const item = useLocation().state.item
-  // 질문 : useNavigate으로 state를 넘길 때, 클릭한 녀석의 state전체를 넘김.
-  // 내가 생각한 장점은 전체 todos를 필터링 할 필요가 없다는 것이었음.
-  // 그런데 진짜 유의미한건가????
-  console.log("location=>", location)
-  
-  const queryClient = useQueryClient()
+  const navigate = useNavigate();
+  const location = useLocation();
+  // console.log("location=>", location.state.id)
+  const detailId = location.state?.id ? location.state.id : "";
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {
     onSuccess: () => {
-      queryClient.invalidateQueries("todos")
-      console.log("데이터 삭제 완료.")
-    }
-  })
+      queryClient.invalidateQueries("todos");
+      console.log("데이터 삭제 완료.");
+    },
+    onError: () => {
+      console.log("상세보기 삭제 문제발생");
+    },
+  });
 
   const deleteTodoHandler = (id) => {
-    mutation.mutate(id)
-    navigate("/")
-    // window.location.reload()
+    if (!item || !item.id) {
+      return;
+    }
+    mutation.mutate(id);
+    navigate("/");
+  };
+
+  const { isLoading, isError, data } = useQuery("todos", getTodos);
+  if (isLoading) {
+    return <h1>상세보기 로딩중입니다. 잠시만 기다려주세요!</h1>;
+  }
+  if (isError) {
+    return <h1>상세보기 오류 발생!!</h1>;
   }
 
+  const item = (data.find((d) => d.id === detailId)) ?  data.find((d) => d.id === detailId) : null
+  
   return (
-    <S.Page>
-      <S.Container>
-        <S.Form>
-          <label>체크박스</label>
-          <input type="checkbox" />
-        </S.Form>
-        <S.DetailFreq>일일/주간{item.todoFreq}</S.DetailFreq>
-        <S.DetailTitle><p>제목: {item.title}</p></S.DetailTitle>
-        <S.DetailDate>
-          <Countdown dueDate = { item.dueDate }/>
-          <p>등록일{item.postDate}</p>
-          <p>마감일{item.dueDate}</p>
-        </S.DetailDate>
+    <>
+      <div>
+        {isOpen && (
+          <S.ModalBox onClick={closeModal}>
+            <S.ModalCtn onClick={(event) => event.stopPropagation()}>
+              <UpdateComp item={item ? item : null} closeModal={closeModal}/>
+              <button onClick={closeModal}>닫는버튼</button>
+            </S.ModalCtn>
+          </S.ModalBox>
+        )}
+      </div>
+      <S.Page>
+        <S.Container>
+          <S.Form>
+            <label>체크박스</label>
+            <input type="checkbox" />
+          </S.Form>
+          <S.DetailFreq>일일/주간{item?.todoFreq}</S.DetailFreq>
+          <S.DetailTitle>
+            <p>제목: {item?.title}</p>
+          </S.DetailTitle>
+          <S.DetailDate>
+            <Countdown dueDate={item?.dueDate} />
+            <p>등록일{item?.postDate}</p>
+            <p>마감일{item?.dueDate}</p>
+          </S.DetailDate>
 
-        <S.DetailBody>
-        <p>내용: {item.content}</p>
-        </S.DetailBody>
-        <S.DeleteBtn onClick = {() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn>
-        <S.DoneBtn>완료</S.DoneBtn>
-        <S.UpdateBtn onClick = {() => navigate(`/update/${item.id}`, {state: {item: item,},})}>수정</S.UpdateBtn>
-      </S.Container>
-    </S.Page>
+          <S.DetailBody>
+            <p>내용: {item?.content}</p>
+          </S.DetailBody>
+          <S.DeleteBtn onClick={() => deleteTodoHandler(item?.id)}>삭제</S.DeleteBtn>
+          <S.DoneBtn>완료</S.DoneBtn>
+          <S.UpdateBtn onClick={openModal}>수정</S.UpdateBtn>
+        </S.Container>
+      </S.Page>
+    </>
   );
 };
 
@@ -123,9 +158,49 @@ const S = {
     grid-row-end: 13;
   `,
   UpdateBtn: styled.button`
-  grid-column-start: 9;
-  grid-column-end: 9;
-  grid-row-start: 13;
-  grid-row-end: 13;
-`
+    grid-column-start: 9;
+    grid-column-end: 9;
+    grid-row-start: 13;
+    grid-row-end: 13;
+  `,
+  ModalBox: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-box2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: colorChange 0.4 linear;
+    @keyframes colorChange {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  `,
+  ModalCtn: styled.div`
+    margin-top: 1rem;
+    background-color: white;
+    padding: 20px;
+    width: 25%;
+    height: 70%;
+    border-radius: 12px;
+    z-index: 1;
+    animation: dropTop 0.4s linear;
+    @keyframes dropTop {
+      0% {
+        transform: translateY(-30%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    }
+  `,
 };

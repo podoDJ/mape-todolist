@@ -8,7 +8,7 @@ const Main = () => {
         marginTop: "100px",
       }}
     >
-      <TodoList />
+      <TodoList todoTypeIs={"All"} />
     </div>
   );
 };

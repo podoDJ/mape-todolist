@@ -1,11 +1,12 @@
 import React from 'react'
+import TodoList from '../../components/TodoList/TodoList'
 
 const Boss = () => {
   return (
     <div style={{
       marginTop: "100px"
     }}>
-    <div>Boss</div>
+    <TodoList todoTypeIs={"Boss"} />
 
     </div>
   )

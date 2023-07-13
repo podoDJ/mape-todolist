@@ -30,23 +30,23 @@ const Countdown = ({ dueDate }) => {
   let content = "";
   switch (true) {
     case timeGap <= 0:
-      content = "시간이 초과되었습니다.";
+      content = "마감일을 초과했습니다.";
       return content;
 
     case minutes <= 5:
-      content = `D-Day: ${minutes}분 ${seconds}초`;
+      content = `D-${minutes}분 ${seconds}초`;
       return content;
 
     case hours <= 1:
-      content = `D-Day: ${minutes}분 ${seconds}초`;
+      content = `D-${minutes}분 ${seconds}초`;
       return content;
 
     case day <= 1:
-      content = `D-Day: ${hours}시간 ${minutes}분`;
+      content = `D-${hours}시간 ${minutes}분`;
       return content;
 
     case day > 2:
-      content = `D-Day: ${day}일 ${hours}시간`;
+      content = `D-${day}일 ${hours}시간`;
       return content;
   }
 
