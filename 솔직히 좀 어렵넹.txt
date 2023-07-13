@@ -1,4 +1,4 @@
-1. redered mored hooks는 일반적으로 if문에서 발생한다.
+1. rendered more hooks는 일반적으로 if문에서 발생한다.
 지난번 rendered fewer hooks의 반대 상황이다.
 if문에서 오류가 발생하면 JS는 코드를 내려읽지 않는다.
 다음의 경우, 비동기처리를 진행했던 녀석이므로,
