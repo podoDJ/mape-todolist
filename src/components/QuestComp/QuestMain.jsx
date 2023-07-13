@@ -5,6 +5,7 @@ import Countdown from "../common/Countdown";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import InputComp from "../InputComp/InputComp";
+import { ButtonCtn } from "../common/Buttons";
 
 const QuestMain = () => {
   const navigate = useNavigate();
@@ -18,8 +19,8 @@ const QuestMain = () => {
     setIsOpen(false);
   };
   useEffect(() => {
-    setIsOpen
-  }, [openModal, closeModal])
+    setIsOpen;
+  }, [openModal, closeModal]);
 
   //queryClient랑 mutation 선언은 useQuery 선언보다 위에 있어야
   //Rendered more hooks than during the previous render 오류가 안 뜨더라. 근데 이게 무슨 오류냐?
@@ -43,8 +44,8 @@ const QuestMain = () => {
     event.stopPropagation();
     mutation.mutate(id);
   };
-  console.log("data=>", data)
-  const sortUrgentBossTodo = data?.filter((item) => item.todoType === "Quest").sort((a, b) => (new Date(a.dueDate) - new Date(b.dueDate)))
+  console.log("data=>", data);
+  const sortUrgentBossTodo = data?.filter((item) => item.todoType === "Quest").sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
   return (
     <>
@@ -54,7 +55,7 @@ const QuestMain = () => {
         {isOpen && (
           <S.ModalBox onClick={closeModal}>
             <S.ModalCtn onClick={(event) => event.stopPropagation()}>
-              <InputComp/>
+              <InputComp />
               <button onClick={closeModal}>닫는버튼</button>
             </S.ModalCtn>
           </S.ModalBox>
@@ -84,9 +85,15 @@ const QuestMain = () => {
                 <p>예상시간: {item.estTime}분</p>
                 <p>isDone: {item.isDone.toString()}</p>
               </div>
-              <button onClick={(event) => deleteTodoHandler(event, item.id)}>삭제하기</button>
-              <button>완료하기</button>
-              <button onClick={() => navigate(`/${item.id}`, { state: { id: item.id } })}>상세보기(임시)</button>
+              <ButtonCtn backgroundColor="var(--color-box1)" color="white" size="medium" onClick={(event) => deleteTodoHandler(event, item.id)}>
+                삭제하기
+              </ButtonCtn>
+              <ButtonCtn backgroundColor="var(--color-box2)" color="white" size="medium">
+                완료하기
+              </ButtonCtn>
+              <ButtonCtn backgroundColor="var(--color-box3)" color="white" size="medium" onClick={() => navigate(`/detail/${item.id}`, { state: { id: item.id } })}>
+                상세보기(임시)
+              </ButtonCtn>
             </div>
           );
         })}
@@ -104,7 +111,7 @@ const S = {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #999999;
+    background-color: var(--color-box2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,10 +124,9 @@ const S = {
         opacity: 1;
       }
     }
-
   `,
   ModalCtn: styled.div`
-  margin-top: 1rem;
+    margin-top: 1rem;
     background-color: white;
     padding: 20px;
     width: 25%;

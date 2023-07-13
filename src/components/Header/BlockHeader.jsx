@@ -3,30 +3,10 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { getUsers, updateUsers } from "../../api/users";
-import { useAuth } from "../../api/AuthContex";
+
 
 const BlockHeader = () => {
   const navigate = useNavigate();
-
-  const {
-    authUser,
-    setAuthUser,
-    isLoggedIn,
-    setIsLoggedIn
-  } = useAuth()
-
-  const logIn = (event) => {
-    event.preventDefault()
-    setIsLoggedIn(true)
-    setAuthUser({
-      name: 'John Doe'
-    })
-  }
-  const logOut = (event) => {
-    event.preventDefault()
-    setIsLoggedIn(false)
-    setAuthUser(null)
-  }
 
   return (
     <S.Header>
@@ -37,9 +17,7 @@ const BlockHeader = () => {
         <S.MenuSpan onClick={() => navigate("/signup")}>회원가입</S.MenuSpan>
         {/* <S.MenuSpan onClick = {(event) => logIn(event)}>로그인</S.MenuSpan>
         <S.MenuSpan onClick = {(event) => logOut(event)}>로그아웃</S.MenuSpan> */}
-        {isLoggedIn ? 
-        <S.MenuSpan onClick = {(event) => logOut(event)}>로그아웃</S.MenuSpan> : 
-        <S.MenuSpan onClick = {() => navigate("/login")}>로그인</S.MenuSpan>}
+        <S.MenuSpan onClick = {() => navigate("/login")}>로그인</S.MenuSpan>
         <S.MenuSpan>프로필 위치</S.MenuSpan>
       </div>
     </S.Header>

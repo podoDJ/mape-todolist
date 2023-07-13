@@ -13,9 +13,4 @@ const deleteUsers = async (id) => {
   await axios.delete(`${process.env.REACT_APP_SERVER_URL}/Users/${id}`)
 }
 
-const updateUsers = async ({ id, updatedTodo }) => {
-  console.log("Users.js에서->", (updatedTodo) ? updatedTodo : "false")
-  await axios.patch(`${process.env.REACT_APP_SERVER_URL}/Users/${id}`, updatedTodo )
-}
-
-export { getUsers, addUsers, deleteUsers, updateUsers }
+export { getUsers, addUsers, deleteUsers }

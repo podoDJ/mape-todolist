@@ -1,68 +1,90 @@
 {
   "todos": [
     {
-      "id": "nxHBi5F-k",
-      "postDate": "2023-07-12T06:38:57.023Z",
-      "title": "db실험",
-      "dueDate": "2023-07-12T06:42:00.000Z",
-      "todoType": "Boss",
-      "todoFreq": "Daily",
-      "content": "핑크빈사냥",
+      "id": "3Z1GRQ8tE",
+      "authorUId": "0HZRMPVlCKhR2445g6py43I9Jsz1",
+      "postDate": "2023-07-13T13:16:42.832Z",
+      "title": "2",
+      "dueDate": "2023-07-13T13:20:00.000Z",
+      "todoType": "Others",
+      "todoFreq": "Others",
+      "content": "2",
+      "estTime": "2",
+      "isDone": false
+    },
+    {
+      "id": "rnwhNLi3E",
+      "authorUId": "0HZRMPVlCKhR2445g6py43I9Jsz1",
+      "postDate": "2023-07-13T14:26:06.497Z",
+      "title": "퀘스트",
+      "dueDate": "2023-07-13T14:30:00.000Z",
+      "todoType": "Quest",
+      "todoFreq": "Weekly",
+      "content": "ㅁㄴㅇㄹ",
       "estTime": "4",
       "isDone": false
     },
     {
-      "id": "ihpH1EfgH",
-      "postDate": "2023-07-12T15:18:41.225Z",
-      "title": "",
-      "dueDate": "2023-07-12T15:25:00.000Z",
+      "id": "U5aZ-V9x1",
+      "authorUId": "0HZRMPVlCKhR2445g6py43I9Jsz1",
+      "postDate": "2023-07-13T14:26:36.073Z",
+      "title": "기타",
+      "dueDate": "2023-07-13T14:31:00.000Z",
       "todoType": "Others",
-      "todoFreq": "Daily",
-      "content": "으어어어",
-      "estTime": "10",
+      "todoFreq": "Others",
+      "content": "기타",
+      "estTime": "78",
+      "isDone": true
+    },
+    {
+      "id": "w-_ThHbO8",
+      "authorUId": "0HZRMPVlCKhR2445g6py43I9Jsz1",
+      "postDate": "2023-07-13T14:48:26.553Z",
+      "title": "222",
+      "dueDate": "2023-07-13T14:48:18.217Z",
+      "todoType": "Boss",
+      "todoFreq": "Weekly",
+      "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "estTime": "5",
       "isDone": false
     }
   ],
   "users": [
     {
-      "id": "1PNeyCxeT",
-      "name": "1",
-      "email": "2",
-      "pw": "3",
-      "phone": "4",
-      "signupDate": "2023-07-11T11:15:48.614Z",
-      "charName": "5",
-      "charClass": "6",
-      "charLevel": "7",
-      "unionLevel": "8",
-      "isLogin": false
+      "id": "9M0Kr3Y9vDYuGA9rr34QTrjejLp1",
+      "name": "이동준",
+      "email": "leedj1345@naver.com",
+      "pw": "password",
+      "phone": "01074064713",
+      "registerDate": "2023-07-13T12:15:10.680Z",
+      "charName": "울별님",
+      "charClass": "듀얼블레이드",
+      "charLevel": "9",
+      "unionLevel": "3"
     },
     {
-      "id": "gIV9xp17F",
-      "name": "11",
-      "email": "22",
-      "pw": "33",
-      "phone": "44",
-      "signupDate": "2023-07-11T11:16:37.099Z",
-      "charName": "55",
-      "charClass": "66",
-      "charLevel": "77",
-      "unionLevel": "88",
-      "isLogin": true
+      "id": "jxKp8cpAiJOJx0VHoBbL3iJiloQ2",
+      "name": "이동준",
+      "email": "leedj1345@naver.com",
+      "pw": "password",
+      "phone": "010-5246-2417",
+      "registerDate": "2023-07-13T12:19:54.615Z",
+      "charName": "울별님",
+      "charClass": "비숍",
+      "charLevel": "5",
+      "unionLevel": "4"
     },
     {
+      "id": "0HZRMPVlCKhR2445g6py43I9Jsz1",
       "name": "이동준",
       "email": "leedj1345@naver.com",
       "pw": "password",
       "phone": "010-1234-5678",
-      "signupDate": "2023-07-12T13:01:51.916Z",
+      "registerDate": "2023-07-13T12:21:19.811Z",
       "charName": "울별님",
       "charClass": "듀얼블레이드",
-      "charLevel": "246",
-      "unionLevel": "7641",
-      "isLogin": true,
-      "id": "dcXxWqS"
+      "charLevel": "6",
+      "unionLevel": "4"
     }
-  ],
-  "logins": []
+  ]
 }

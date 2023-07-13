@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import InputComp from "../InputComp/InputComp";
 import { useAuth } from "../../api/AuthContex";
+import { ButtonCtn } from "../common/Buttons";
 
 const BossMain = () => {
   const navigate = useNavigate();
@@ -19,11 +20,12 @@ const BossMain = () => {
     setIsOpen(false);
   };
   useEffect(() => {
-    setIsOpen
-  }, [openModal, closeModal])
-  console.log("보스메인에서 유스어스", useAuth()? useAuth() : "보스메인에서 유스어스 안뜸")
+    setIsOpen;
+  }, [openModal, closeModal]);
   //queryClient랑 mutation 선언은 useQuery 선언보다 위에 있어야
   //Rendered more hooks than during the previous render 오류가 안 뜨더라. 근데 이게 무슨 오류냐?
+  // Answer : hook이 if문이 있는 함수 아래에 위치할 경우, if문에서 error걸릴 때 return; 하도록 로직 되어있으면
+  // 그 if문 아래 있는 hook이 실행되지 않아서 발생하는 오류임.
   const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {
@@ -44,8 +46,7 @@ const BossMain = () => {
     event.stopPropagation();
     mutation.mutate(id);
   };
-  console.log("data=>", data)
-  const sortUrgentBossTodo = data?.filter((item) => item.todoType === "Boss").sort((a, b) => (new Date(a.dueDate) - new Date(b.dueDate)))
+  const sortUrgentBossTodo = data?.filter((item) => item.todoType === "Boss").sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
   return (
     <>
@@ -55,7 +56,7 @@ const BossMain = () => {
         {isOpen && (
           <S.ModalBox onClick={closeModal}>
             <S.ModalCtn onClick={(event) => event.stopPropagation()}>
-              <InputComp/>
+              <InputComp />
               <button onClick={closeModal}>닫는버튼</button>
             </S.ModalCtn>
           </S.ModalBox>
@@ -85,9 +86,15 @@ const BossMain = () => {
                 <p>예상시간: {item.estTime}분</p>
                 <p>isDone: {item.isDone.toString()}</p>
               </div>
-              <button onClick={(event) => deleteTodoHandler(event, item.id)}>삭제하기</button>
-              <button>완료하기</button>
-              <button onClick={() => navigate(`/${item.id}`, { state: { id: item.id } })}>상세보기(임시)</button>
+              <ButtonCtn backgroundColor="var(--color-box1)" color="white" size="medium" onClick={(event) => deleteTodoHandler(event, item.id)}>
+                삭제하기
+              </ButtonCtn>
+              <ButtonCtn backgroundColor="var(--color-box2)" color="white" size="medium">
+                완료하기
+              </ButtonCtn>
+              <ButtonCtn backgroundColor="var(--color-box3)" color="white" size="medium" onClick={() => navigate(`/detail/${item.id}`, { state: { id: item.id } })}>
+                상세보기(임시)
+              </ButtonCtn>
             </div>
           );
         })}
@@ -105,7 +112,7 @@ const S = {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #999999;
+    background-color: var(--color-box2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,10 +125,9 @@ const S = {
         opacity: 1;
       }
     }
-
   `,
   ModalCtn: styled.div`
-  margin-top: 1rem;
+    margin-top: 1rem;
     background-color: white;
     padding: 20px;
     width: 25%;

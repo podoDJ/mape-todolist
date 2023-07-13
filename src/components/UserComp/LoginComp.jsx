@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "../../api/AuthContex";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { ButtonCtn } from "../common/Buttons";
 //참고사이트 : https://velog.io/@dev-hannahk/react-firebase-crud
 const LoginComp = () => {
-  
-  // const queryClient = useQueryClient();
-
-  // const mutation = useMutation(addLogins, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("logins");
-  //     console.log("로그인 입력 완료 & 로그인 데이터 최신화 성공!");
-  //   },
-  //   onError: () => alert("죄송합니다. 현재 로그인 에러가 발생했습니다."),
-  // });
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
@@ -25,14 +17,18 @@ const LoginComp = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, pw);
       console.log("userCredential => ", userCredential);
+
+      const user = userCredential.user
+      // 로그인 시 토큰을 받아 세션스토리지에 저장
+      const token = await user.getIdToken();
+      await sessionStorage.setItem("token", token)
+      await window.location.reload()
     } catch (error) {
       console.log("로그인 인증 에러 발생");
     }
+    
   };
-  const loginAddHandler = (event) => {
-    loginFunc(event);
-  };
-
+  
   return (
     <>
       <div>
@@ -40,8 +36,8 @@ const LoginComp = () => {
           <label>이메일</label>
           <input value={email} onChange={(event) => setEmail(event.target.value)} />
           <label>패스워드</label>
-          <input value={pw} onChange={(event) => setPw(event.target.value)} />
-          <button>로그인</button>
+          <input type="password" value={pw} onChange={(event) => setPw(event.target.value)} />
+          <ButtonCtn backgroundColor="var(--color-box1)" color="white" size="medium">로그인</ButtonCtn>
         </form>
       </div>
     </>

@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import Countdown from "../common/Countdown";
 import { deleteTodos, getTodos } from "../../api/todos";
+import Countdown from "../common/Countdown";
 import UpdateComp from "../UpdateComp/UpdateComp";
-
 
 const DetailComp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const detailId = location.state.id
+  // console.log("location=>", location.state.id)
+  const detailId = location.state?.id ? location.state.id : "";
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -19,7 +19,7 @@ const DetailComp = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
- 
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation(deleteTodos, {
@@ -27,31 +27,36 @@ const DetailComp = () => {
       queryClient.invalidateQueries("todos");
       console.log("데이터 삭제 완료.");
     },
+    onError: () => {
+      console.log("상세보기 삭제 문제발생");
+    },
   });
 
   const deleteTodoHandler = (id) => {
+    if (!item || !item.id) {
+      return;
+    }
     mutation.mutate(id);
     navigate("/");
   };
 
   const { isLoading, isError, data } = useQuery("todos", getTodos);
   if (isLoading) {
-    return <h1>상세보기 로딩중입니다. 잠시만 기다려주세요!!!</h1>;
+    return <h1>상세보기 로딩중입니다. 잠시만 기다려주세요!</h1>;
   }
   if (isError) {
-    return <h1>오류가 발생했습니다!!</h1>;
+    return <h1>상세보기 오류 발생!!</h1>;
   }
 
-  const item = data?.find((d) => d.id === detailId)
-  console.log("item==>",item)
-
+  const item = (data.find((d) => d.id === detailId)) ?  data.find((d) => d.id === detailId) : null
+  
   return (
     <>
       <div>
         {isOpen && (
           <S.ModalBox onClick={closeModal}>
             <S.ModalCtn onClick={(event) => event.stopPropagation()}>
-              <UpdateComp item={item} closeModal={closeModal} />
+              <UpdateComp item={item ? item : null} closeModal={closeModal}/>
               <button onClick={closeModal}>닫는버튼</button>
             </S.ModalCtn>
           </S.ModalBox>
@@ -63,20 +68,20 @@ const DetailComp = () => {
             <label>체크박스</label>
             <input type="checkbox" />
           </S.Form>
-          <S.DetailFreq>일일/주간{item.todoFreq}</S.DetailFreq>
+          <S.DetailFreq>일일/주간{item?.todoFreq}</S.DetailFreq>
           <S.DetailTitle>
-            <p>제목: {item.title}</p>
+            <p>제목: {item?.title}</p>
           </S.DetailTitle>
           <S.DetailDate>
-            <Countdown dueDate={item.dueDate} />
-            <p>등록일{item.postDate}</p>
-            <p>마감일{item.dueDate}</p>
+            <Countdown dueDate={item?.dueDate} />
+            <p>등록일{item?.postDate}</p>
+            <p>마감일{item?.dueDate}</p>
           </S.DetailDate>
 
           <S.DetailBody>
-            <p>내용: {item.content}</p>
+            <p>내용: {item?.content}</p>
           </S.DetailBody>
-          {/* <S.DeleteBtn onClick={() => deleteTodoHandler(item.id)}>삭제</S.DeleteBtn> */}
+          <S.DeleteBtn onClick={() => deleteTodoHandler(item?.id)}>삭제</S.DeleteBtn>
           <S.DoneBtn>완료</S.DoneBtn>
           <S.UpdateBtn onClick={openModal}>수정</S.UpdateBtn>
         </S.Container>
@@ -164,7 +169,7 @@ const S = {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #494949;
+    background-color: var(--color-box2);
     display: flex;
     align-items: center;
     justify-content: center;

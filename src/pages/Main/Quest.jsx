@@ -1,5 +1,5 @@
 import React from "react";
-import QuestMain from "../../components/QuestComp/QuestMain";
+import TodoList from "../../components/TodoList/TodoList";
 
 const Quest = () => {
   return (
@@ -8,7 +8,7 @@ const Quest = () => {
         marginTop: "100px",
       }}
     >
-      <QuestMain/>
+      <TodoList todoTypeIs={"Quest"} />
     </div>
   );
 };

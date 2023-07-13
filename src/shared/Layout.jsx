@@ -25,7 +25,7 @@ const StHeader = styled.header`
 `;
 
 const StLayout = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   min-width: 800px;
   margin: 2px auto;
 `;
