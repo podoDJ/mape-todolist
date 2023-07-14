@@ -5,7 +5,7 @@ const Signup = () => {
   return (
     <div
     style={{
-      marginTop: "100px",
+      marginTop: "130px",
     }}
   >
     <RegisterComp />
