@@ -4,7 +4,7 @@ import InputComp from '../../components/InputComp/InputComp'
 const Input = () => {
   return (
     <div style={{
-      marginTop: "100px"
+      marginTop: "130px"
     }}>
     <InputComp />
 

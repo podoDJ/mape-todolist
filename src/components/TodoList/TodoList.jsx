@@ -8,6 +8,10 @@ import InputComp from "../InputComp/InputComp";
 import { ButtonCtn } from "../common/Buttons";
 import { GoTriangleRight, GoTriangleLeft } from "react-icons/go";
 
+export const DateReform = (date) => {
+  return `${date.slice(0, 10)}  ${date.slice(11, 13)} : ${date.slice(14, 16)} : ${date.slice(17, 19)}`;
+};
+
 const TodoList = ({ todoTypeIs }) => {
   const navigate = useNavigate();
 
@@ -48,25 +52,23 @@ const TodoList = ({ todoTypeIs }) => {
     mutation.mutate(id);
   };
   const updateIsDoneHandler = (id, itemIsDone) => {
-    const updatedTodo = {isDone: !itemIsDone}
-    mutationIsDone.mutate({ id: id, updatedTodo })
-  }
+    const updatedTodo = { isDone: !itemIsDone };
+    mutationIsDone.mutate({ id: id, updatedTodo });
+  };
 
   // const sortUrgentData = data?.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate) || []);
-  let sortUrgentData = []
-  const abc = (todoTypeIs) => {
+  let sortUrgentData = [];
+  const menuFilter = (todoTypeIs) => {
     if (todoTypeIs === "All") {
       sortUrgentData = data?.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate) || []);
-      return sortUrgentData
+      return sortUrgentData;
     } else {
-      sortUrgentData = data?.filter((item) => item.todoType === todoTypeIs)
-      .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate) || []);
+      sortUrgentData = data?.filter((item) => item.todoType === todoTypeIs).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate) || []);
     }
-  } 
-  abc(todoTypeIs)
-  const DateReform = (date) => {
-    return `${date.slice(0, 10)}  ${date.slice(11, 19)}`;
   };
+  menuFilter(todoTypeIs);
+  
+
   const TypeReform = (type) => {
     switch (type) {
       case "Boss":
@@ -119,15 +121,37 @@ const TodoList = ({ todoTypeIs }) => {
             return (
               <S.CardBox key={item.id}>
                 <div>
-                  <p>숙제: {item.title}</p>
-                  <p>{DateReform(item.postDate)} 등록</p>
-                  <p>{DateReform(item.dueDate)} 까지</p>
+                  <S.UlCtn>
+                    <S.Ul bc="var(--color-box1)">{TypeReform(item.todoType)}</S.Ul>
+                    <S.Ul bc="var(--color-box3)">{TypeReform(item.todoFreq)}</S.Ul>
+                    <S.Ul bc="none" border="1px solid red" fc="black" fontsize="12px" padding="10px">
+                      <Countdown dueDate={item.dueDate} />
+                    </S.Ul>
+                  </S.UlCtn>
+                  {/* <S.UlCtn> */}
+                  <S.Ul bc="var(--color-box2)" fc="black">
+                    {item.title}
+                  </S.Ul>
+                  <S.Ul bc="var(--color-box2)" fc="black">
+                    {item.content.length > 20 ? `${item.content.slice(0, 20)}...` : item.content}
+                  </S.Ul>
+                  <S.Ul bc="var(--color-box2)" fc="black">
+                    등록: {DateReform(item.postDate)}
+                  </S.Ul>
+                  <S.Ul bc="var(--color-box2)" fc="black">
+                    마감: {DateReform(item.dueDate)}
+                  </S.Ul>
+                  <S.Ul bc="var(--color-box2)" fc="black">
+                    예상시간: {item.estTime}분
+                  </S.Ul>
+                  {/* </S.UlCtn> */}
+                  {/* <p>숙제: {item.title}</p>
+                  <p>등록: {DateReform(item.postDate)}</p>
+                  <p>마감: {DateReform(item.dueDate)}</p>
                   상태: <Countdown dueDate={item.dueDate} />
-                  <p>종류: {TypeReform(item.todoType)}</p>
-                  <p>일간/주간: {TypeReform(item.todoFreq)}</p>
-                  <p>내용: {item.content.length > 20 ? `${item.content.slice(0, 20)}...` : item.content}</p>
+                  <p>내용: </p>
                   <p>예상시간: {item.estTime}분</p>
-                  <p>isDone: {item.isDone.toString()}</p>
+                  <p>isDone: {item.isDone.toString()}</p> */}
                 </div>
                 <S.CardBoxBtnCtn>
                   <ButtonCtn backgroundColor="var(--color-box1)" color="white" size="card-button" onClick={() => deleteTodoHandler(item.id)}>
@@ -162,9 +186,9 @@ const TodoList = ({ todoTypeIs }) => {
                   return (
                     <S.DoneModalCtn key={item.id} onClick={(event) => event.stopPropagation()}>
                       <div>
-                        <div>숙제: {item.title}</div>
-                        <div>Due: {DateReform(item.dueDate)}</div>
-                        <div>isDone: {item.isDone.toString()}</div>
+                        <div>제목: {item.title}</div>
+                        <div>마감일: {DateReform(item.dueDate)}</div>
+                        <div>완료여부: {item.isDone.toString()}</div>
                       </div>
                       <S.DoneModalBtnCtn>
                         <ButtonCtn backgroundColor="var(--color-box1)" color="white" size="card-button" onClick={() => deleteTodoHandler(item.id)}>
@@ -210,9 +234,28 @@ const S = {
     justify-content: center;
   `,
   CardBox: styled.div`
-    border: 3px solid red;
+    border: 3px solid var(--color-box3);
     padding: 10px;
     margin: 10px;
+  `,
+  UlCtn: styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  `,
+  Ul: styled.ul`
+    text-align: center;
+    align-items: center;
+    padding: ${(props) => (props.padding ? props.padding : "10px")};
+    border: ${(props) => (props.border ? props.border : "none")};
+    border-radius: 10px;
+    background-color: ${(props) => props.bc};
+    color: ${(props) => (props.fc ? props.fc : "white")};
+    font-size: ${(props) => (props.fontsize ? props.fontsize : "15px")};
+    font-weight: bold;
+    cursor: pointer;
+
   `,
   CardBoxBtnCtn: styled.div`
     display: flex;
@@ -261,7 +304,7 @@ const S = {
   `,
   DoneModalBox: styled.div`
     position: fixed;
-    top: 50px;
+    top: 80px;
     right: 0;
     width: 26%;
     height: 100%;
@@ -311,6 +354,7 @@ const S = {
     border: none;
     margin: 5px;
     background-color: var(--color-box1);
+    cursor: pointer;
   `,
   DoneModalCloseBtn: styled.button`
     position: fixed;
@@ -324,6 +368,7 @@ const S = {
     border: none;
     margin: 5px;
     background-color: white;
+    cursor: pointer;
   `,
   DoneText: styled.div`
     position: relative;
@@ -338,5 +383,13 @@ const S = {
     font-weight: bold;
     width: 10rem;
     height: 2rem;
+  `,
+  Span: styled.span`
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--color-box1);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
   `,
 };

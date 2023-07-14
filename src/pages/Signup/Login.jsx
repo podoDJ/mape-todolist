@@ -4,7 +4,7 @@ import LoginComp from '../../components/UserComp/LoginComp'
 const Login = () => {
   return (
     <div style={{
-      marginTop: "100px"
+      marginTop: "130px"
     }}>
     <LoginComp/>
     </div>

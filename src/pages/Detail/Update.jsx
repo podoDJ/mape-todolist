@@ -4,7 +4,7 @@ import UpdateComp from '../../components/UpdateComp/UpdateComp'
 const Update = () => {
   return (
     <div style={{
-      marginTop: "100px"
+      marginTop: "130px"
     }}>
     <UpdateComp/>
     </div>

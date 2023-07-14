@@ -5,7 +5,7 @@ const Others = () => {
   return (
     <div
       style={{
-        marginTop: "100px",
+        marginTop: "130px",
       }}
     >
       <TodoList todoTypeIs={"Others"} />

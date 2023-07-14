@@ -4,7 +4,7 @@ import TodoList from '../../components/TodoList/TodoList'
 const Boss = () => {
   return (
     <div style={{
-      marginTop: "100px"
+      marginTop: "130px"
     }}>
     <TodoList todoTypeIs={"Boss"} />
 
