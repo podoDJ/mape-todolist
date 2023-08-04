@@ -1,7 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
-
+${reset}
 :root {
   --color-bg: #FFF4E0;;
   --color-box1: #FF7E00;
@@ -10,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  margin-top: 100px
+  margin-top: 200px
 }
 `
 

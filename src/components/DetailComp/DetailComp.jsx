@@ -6,6 +6,7 @@ import { deleteTodos, getTodos, updateTodos } from "../../api/todos";
 import Countdown from "../common/Countdown";
 import UpdateComp from "../UpdateComp/UpdateComp";
 import { DateReform } from "../TodoList/TodoList";
+import { ButtonCtn } from "../common/Buttons";
 
 const DetailComp = () => {
   const navigate = useNavigate();

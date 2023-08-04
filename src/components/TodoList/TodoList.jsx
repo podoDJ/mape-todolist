@@ -237,6 +237,7 @@ const S = {
     border: 3px solid var(--color-box3);
     padding: 10px;
     margin: 10px;
+
   `,
   UlCtn: styled.div`
     display: flex;

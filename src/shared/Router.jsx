@@ -13,6 +13,7 @@ import Login from "../pages/Signup/Login";
 import BlockLayout from "./BlockLayout";
 import { auth } from "../firebase";
 import GlobalStyle from "../GlobalStyle";
+import CommentTest from "../pages/Main/CommentTest";
 
 const Router = () => {
 
@@ -31,7 +32,9 @@ const Router = () => {
     <BrowserRouter>
     <GlobalStyle />
       {isLoggedIn ? (
+        
         <Layout>
+          
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/input" element={<Input />} />
@@ -40,11 +43,14 @@ const Router = () => {
             <Route path="/others" element={<Others />} />
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/update/:id" element={<Update />} />
+            <Route path="/comment" element={<CommentTest />} />
+
             <Route path="/login" element={<Navigate to="/"/>} />
           </Routes>
         </Layout>
       ) : (
         <BlockLayout>
+          <GlobalStyle />
           <Routes>
             <Route path="/" element={<Navigate to="/login"/>} />
             <Route path="/login" element={<Login />} />

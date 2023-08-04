@@ -46,7 +46,7 @@
       "todoFreq": "Daily",
       "content": "으아아아",
       "estTime": "4",
-      "isDone": false
+      "isDone": true
     },
     {
       "id": "3oxoagAEZ",
@@ -70,7 +70,7 @@
       "todoFreq": "Daily",
       "content": "프로젝트 버그를 빨리 수정하자",
       "estTime": "11",
-      "isDone": true
+      "isDone": false
     }
   ],
   "users": [
@@ -121,6 +121,18 @@
       "charClass": "비숍",
       "charLevel": "77",
       "unionLevel": "88"
+    },
+    {
+      "id": "Ce8QKmtkvDWWZ0H428QGVOtHgk73",
+      "name": "이동준2",
+      "email": "operational4@naver.com",
+      "pw": "passowrd",
+      "phone": "010-5234-8641",
+      "registerDate": "2023-07-14T08:33:25.360Z",
+      "charName": "옆별",
+      "charClass": "루미너스",
+      "charLevel": "236",
+      "unionLevel": "7500"
     }
   ]
 }
