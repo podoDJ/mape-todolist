@@ -3,11 +3,8 @@ import InputComp from '../../components/InputComp/InputComp'
 
 const Input = () => {
   return (
-    <div style={{
-      marginTop: "130px"
-    }}>
+    <div>
     <InputComp />
-
     </div>
   )
 }

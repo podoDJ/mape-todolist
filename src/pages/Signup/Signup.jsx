@@ -3,11 +3,7 @@ import RegisterComp from '../../components/UserComp/RegisterComp'
 
 const Signup = () => {
   return (
-    <div
-    style={{
-      marginTop: "130px",
-    }}
-  >
+    <div>
     <RegisterComp />
   </div>
   )

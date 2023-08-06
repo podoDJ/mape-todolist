@@ -111,7 +111,6 @@ export default DetailComp;
 
 const S = {
   Page: styled.div`
-    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

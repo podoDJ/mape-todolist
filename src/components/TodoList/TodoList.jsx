@@ -246,6 +246,7 @@ const S = {
     gap: 5px;
   `,
   Ul: styled.ul`
+    margin: 0.5rem 0;
     text-align: center;
     align-items: center;
     padding: ${(props) => (props.padding ? props.padding : "10px")};

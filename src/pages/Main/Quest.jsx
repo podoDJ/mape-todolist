@@ -3,11 +3,7 @@ import TodoList from "../../components/TodoList/TodoList";
 
 const Quest = () => {
   return (
-    <div
-      style={{
-        marginTop: "130px",
-      }}
-    >
+    <div>
       <TodoList todoTypeIs={"Quest"} />
     </div>
   );
